@@ -1,0 +1,19 @@
+name = "zachary-visitor-counter"
+main = "src/index.js"
+compatibility_date = "2026-05-29"
+
+[[durable_objects.bindings]]
+name = "VISIT_COUNTER"
+class_name = "VisitCounter"
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["VisitCounter"]
+
+[[routes]]
+pattern = "zachary-lee.com/api/visit*"
+zone_name = "zachary-lee.com"
+
+[[routes]]
+pattern = "www.zachary-lee.com/api/visit*"
+zone_name = "zachary-lee.com"

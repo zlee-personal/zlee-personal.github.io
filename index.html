@@ -1,0 +1,301 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta
+      name="description"
+      content="Zachary Lee - Purdue PhD student working on machine learning, differentiable physics, 3D Gaussian splatting, and neuro-symbolic methods."
+    >
+    <title>Zachary Lee's Research Zone</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to main content</a>
+
+    <div class="page-shell">
+      <header class="site-header" id="top">
+        <div class="badge-row" aria-label="retro web badges">
+          <span class="badge badge-hot">PURDUE CS</span>
+          <span class="badge badge-new">PG-3DGS</span>
+          <span class="badge badge-safe">MACHINE LEARNING</span>
+        </div>
+
+        <div class="title-card">
+          <p class="pretitle">Welcome to the personal homepage of</p>
+          <h1>Zachary Lee</h1>
+          <p class="subtitle">
+            PhD student in machine learning at Purdue University, building 3D models
+            that capture both visuals and physics.
+          </p>
+        </div>
+
+        <marquee class="ticker" behavior="scroll" direction="left" scrollamount="7">
+          PG-3DGS is now on arXiv *** Differentiable physics + 3D Gaussian splatting
+          *** Python / PyTorch / CUDA / numerical simulation
+        </marquee>
+      </header>
+
+      <div class="layout-table">
+        <aside class="sidebar" aria-label="Site navigation and contact">
+          <section class="panel visitor-panel">
+            <h2>Visitor Counter</h2>
+            <div class="counter" aria-live="polite">
+              <span id="visitor-count">000001</span>
+            </div>
+            <!-- <p class="fine-print">Browser-local visit counter.</p> -->
+          </section>
+
+          <nav class="panel nav-panel" aria-label="Main navigation">
+            <h2>Directory</h2>
+            <a href="#paper">Current Paper</a>
+            <a href="#projects">Project Archive</a>
+            <a href="#resume">Resume</a>
+            <a href="#links">Links</a>
+          </nav>
+
+          <section class="panel contact-panel" id="links">
+            <h2>Contact</h2>
+            <a href="mailto:zacharylee314@gmail.com">Email Zachary</a>
+            <a href="https://github.com/zlee-personal">GitHub: zlee-personal</a>
+            <a href="https://github.com/lee5230">GitHub: lee5230</a>
+            <a href="https://www.linkedin.com/in/zachary-lee-616879173/">LinkedIn</a>
+          </section>
+
+          <section class="panel stamp-panel" aria-label="site status">
+            <p class="construction blink">RESEARCH HOMEPAGE</p>
+            <p>Last modified: <span id="last-modified">May 29, 2026</span></p>
+            <p class="fine-print">Academic profile and project archive.</p>
+          </section>
+        </aside>
+
+        <main id="main" class="main-content">
+          <section class="hero-grid" aria-labelledby="about-heading">
+            <div class="window about-window">
+              <div class="window-bar">
+                <span>About Zachary Lee</span>
+              </div>
+              <div class="window-body">
+                <h2 id="about-heading">Personal Profile</h2>
+                <p>
+                  I am a PhD student in Computer Science at Purdue University,
+                  focused on machine learning methods that combine physical
+                  simulation, generative modeling, and structured reasoning.
+                </p>
+                <p>
+                  My current work couples 3D Gaussian splatting with differentiable
+                  fluid simulation so generated objects can satisfy physical
+                  objectives, not just visual ones.
+                </p>
+                <div class="keyword-cloud" aria-label="research keywords">
+                  <span>PyTorch</span>
+                  <span>CUDA</span>
+                  <span>3DGS</span>
+                  <span>Differentiable Physics</span>
+                  <span>Numerical Methods</span>
+                  <span>Neuro-Symbolic AI</span>
+                </div>
+              </div>
+            </div>
+
+            <aside class="focus-card" aria-label="Research focus summary">
+              <h2>Research Focus</h2>
+              <p>
+                Machine learning systems that connect visual reconstruction,
+                physical simulation, and functional 3D structure.
+              </p>
+              <ul>
+                <li>3D scene representations</li>
+                <li>Differentiable physics</li>
+                <li>Generative modeling</li>
+              </ul>
+            </aside>
+          </section>
+
+          <section class="window research-window" id="paper" aria-labelledby="paper-heading">
+            <div class="window-bar">
+              <span>Current Paper</span>
+            </div>
+            <div class="window-body">
+              <p class="section-kicker">Current Paper</p>
+              <h2 id="paper-heading">
+                PG-3DGS: Optimizing 3D Gaussian Splatting to Satisfy Physics Objectives
+              </h2>
+              <p class="authors">Zachary Lee, Maxwell Jacobson, Yexiang Xue</p>
+              <p>
+                PG-3DGS connects appearance-based 3D reconstruction with
+                physics-based reasoning. The framework adds differentiable physics
+                objectives to Gaussian Splatting, guiding generated shapes toward
+                physical functionality while preserving visual quality.
+              </p>
+              <p>
+                Experiments include pouring and aerodynamic lift tasks. Bench-top
+                3D-printed aircraft tests compare Cessna, B-2 Spirit, and paper
+                plane geometries under identical airflow conditions.
+              </p>
+
+              <div class="action-row">
+                <a class="big-button" href="https://arxiv.org/abs/2605.11266">Read on arXiv</a>
+                <a class="big-button alt-button" href="https://doi.org/10.48550/arXiv.2605.11266">DOI</a>
+              </div>
+
+              <table class="stats-table">
+                <caption>Paper metadata</caption>
+                <tbody>
+                  <tr>
+                    <th scope="row">Submitted</th>
+                    <td>May 11, 2026</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Subjects</th>
+                    <td>Computer Vision, Graphics, Machine Learning</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Comments</th>
+                    <td>Under review for Artificial Intelligence Journal. 52 pages.</td>
+                  </tr>
+                  <tr>
+                    <th scope="row">Core idea</th>
+                    <td>Optimize 3D geometry for both visual fidelity and physical behavior.</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </section>
+
+          <section class="window" id="projects" aria-labelledby="projects-heading">
+            <div class="window-bar">
+              <span>Project Archive</span>
+            </div>
+            <div class="window-body">
+              <p class="section-kicker">Project Archive</p>
+              <h2 id="projects-heading">Selected Work</h2>
+
+              <div class="project-grid">
+                <article class="project-card">
+                  <h3>Physics-Guided 3D Gaussian Splatting</h3>
+                  <p>
+                    Research system coupling differentiable fluid simulation with
+                    3D Gaussian representations for physically functional object
+                    generation.
+                  </p>
+                  <p>
+                    <a href="https://arxiv.org/abs/2605.11266">Read the PG-3DGS paper on arXiv</a>
+                  </p>
+                  <p class="tag-strip">3DGS / Differentiable Simulation / PyTorch / CUDA</p>
+                </article>
+
+                <article class="project-card">
+                  <h3>Missing Soil Property Imputation</h3>
+                  <p>
+                    Colorado School of Mines MS thesis work using machine learning
+                    to impute missing soil properties for engineering datasets.
+                  </p>
+                  <p class="tag-strip">Machine Learning / Data Imputation / Numerical Data</p>
+                </article>
+
+                <article class="project-card">
+                  <h3>Orebody Data Modeling</h3>
+                  <p>
+                    MInDS Lab research implementing and improving deep learning
+                    methods, including Generative Adversarial Imputation Networks,
+                    for missing orebody data.
+                  </p>
+                  <p class="tag-strip">GANs / OOD Learning / Multi-Instance Learning</p>
+                </article>
+
+                <article class="project-card">
+                  <h3>Product Recommendation System</h3>
+                  <p>
+                    Field session project with Venvee: built a PyTorch model and
+                    AWS-backed API to predict purchase categories from user data.
+                  </p>
+                  <p class="tag-strip">PyTorch / Pandas / AWS / Training Pipelines</p>
+                </article>
+              </div>
+            </div>
+          </section>
+
+          <section class="window resume-window" id="resume" aria-labelledby="resume-heading">
+            <div class="window-bar">
+              <span>Resume</span>
+            </div>
+            <div class="window-body">
+              <p class="section-kicker">Resume</p>
+              <h2 id="resume-heading">Education, Research, and Experience</h2>
+
+              <div class="action-row">
+                <a class="big-button" href="assets/ZacharyLeeResume.pdf">Download Resume PDF</a>
+                <a class="big-button alt-button" href="mailto:zacharylee314@gmail.com">Email</a>
+              </div>
+
+              <table class="resume-table">
+                <caption>Education timeline</caption>
+                <thead>
+                  <tr>
+                    <th scope="col">When</th>
+                    <th scope="col">Where</th>
+                    <th scope="col">What</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>2024-current</td>
+                    <td>Purdue University</td>
+                    <td>PhD in Computer Science. Research in AI, 3D Gaussian splatting, differentiable simulation, and physics-based modeling.</td>
+                  </tr>
+                  <tr>
+                    <td>2022-2023</td>
+                    <td>Colorado School of Mines</td>
+                    <td>MS in Computer Science, 4.0 GPA. Thesis: Imputing Missing Soil Properties Using Machine Learning.</td>
+                  </tr>
+                  <tr>
+                    <td>2019-2022</td>
+                    <td>Colorado School of Mines</td>
+                    <td>BS in Computer Science, Data Science focus, Computational and Applied Mathematics minor, 3.9 GPA.</td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="resume-columns">
+                <section>
+                  <h3>Research Experience</h3>
+                  <ul class="star-list">
+                    <li>Purdue AI research on physically functional 3D objects from images.</li>
+                    <li>MInDS Lab deep learning methods for missing orebody data.</li>
+                    <li>Mining Engineering Department models for mine safety feature analysis.</li>
+                    <li>TA for Data Science and Machine Learning.</li>
+                  </ul>
+                </section>
+
+                <section>
+                  <h3>Industry Experience</h3>
+                  <ul class="star-list">
+                    <li>Payne Institute Earth Observation Group satellite-data preprocessing and log analysis.</li>
+                    <li>nou Systems backend and simulation scheduler work for the Missile Defense Agency.</li>
+                    <li>Python, SQL, GraphQL, Flask, PostgreSQL, Linux, and web scraping.</li>
+                  </ul>
+                </section>
+              </div>
+
+              <p class="award-ribbon">2024 Presidential Excellence PhD Award, Purdue University</p>
+            </div>
+          </section>
+
+        </main>
+      </div>
+
+      <footer class="site-footer">
+        <p>
+          Copyright (C) 2026 Zachary Lee.
+          <a href="#top">Back to top</a>
+        </p>
+        <p class="fine-print">
+          Responsive academic homepage with links to research, projects, and resume.
+        </p>
+      </footer>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
