@@ -3,6 +3,8 @@
   var boringToggle = document.getElementById("boring-toggle");
   var counter = document.getElementById("visitor-count");
   var lastModified = document.getElementById("last-modified");
+  var fancyTitle = "Zachary Lee's Research Zone";
+  var boringTitle = "Zachary Lee";
   var reduceMotion = window.matchMedia &&
     window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -27,13 +29,16 @@
   }
 
   function syncModeToggle() {
+    var enabled = isBoringMode();
+
+    document.title = enabled ? boringTitle : fancyTitle;
+
     if (!boringToggle) {
       return;
     }
 
-    var enabled = isBoringMode();
     boringToggle.setAttribute("aria-pressed", String(enabled));
-    boringToggle.textContent = enabled ? "Restore Fancy Mode" : "Make Website Boring";
+    boringToggle.textContent = enabled ? "Restore Colorful View" : "Classic View";
   }
 
   if (boringToggle) {

@@ -8,15 +8,26 @@
       content="Zachary Lee - Purdue PhD student working on machine learning, differentiable physics, 3D Gaussian splatting, and neuro-symbolic methods."
     >
     <title>Zachary Lee's Research Zone</title>
+    <link rel="icon" href="assets/favicon.ico" sizes="any">
+    <link rel="icon" type="image/png" sizes="32x32" href="assets/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="assets/favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="assets/apple-touch-icon.png">
+    <link rel="manifest" href="site.webmanifest">
+    <meta name="theme-color" content="#ffffff">
     <script>
       try {
         if (localStorage.getItem("zachary-site-mode") === "boring") {
           document.documentElement.classList.add("boring-mode");
+          document.title = "Zachary Lee";
         }
       } catch (error) {
         document.documentElement.classList.remove("boring-mode");
       }
     </script>
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css"
+    >
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -26,18 +37,17 @@
       <header class="site-header" id="top">
         <div class="mode-control">
           <button class="mode-toggle" id="boring-toggle" type="button" aria-pressed="false">
-            Make Website Boring
+            Toned-Down Website Toggle
           </button>
           <span
             class="mode-help"
             tabindex="0"
             role="img"
-            aria-label="If you do not appreciate some of the bolder stylistic choices of this website, click this button to toggle it to a more traditional website format."
+            aria-label="If you do not appreciate some of this website’s bolder stylistic choices, click this button to toggle to a more traditional format."
           >
             ?
             <span class="mode-tooltip" role="tooltip">
-              If you do not appreciate some of the bolder stylistic choices of this website,
-              click this button to toggle it to a more traditional website format.
+              If you do not appreciate some of this website’s bolder stylistic choices, click this button to toggle to a more traditional format.
             </span>
           </span>
         </div>
@@ -47,26 +57,17 @@
           <h1>Zachary Lee</h1>
           <p class="subtitle">
             PhD student in machine learning at Purdue University, building 3D models
-            that capture both visuals and physics.
+            that capture both appearance and physical behavior.
           </p>
         </div>
 
         <marquee class="ticker" behavior="scroll" direction="left" scrollamount="7">
-          PG-3DGS is now on arXiv *** Differentiable physics + 3D Gaussian splatting
-          *** Python / PyTorch / CUDA / numerical simulation
+          PG-3DGS is now on arXiv ✦ Physics-guided 3D Gaussian Splatting ✦ 3D models optimized for appearance, geometry, and physical function
         </marquee>
       </header>
 
       <div class="layout-table">
         <aside class="sidebar" aria-label="Site navigation and contact">
-          <section class="panel visitor-panel">
-            <h2>Visitor Counter</h2>
-            <div class="counter" aria-live="polite">
-              <span id="visitor-count">000001</span>
-            </div>
-            <!-- <p class="fine-print">Browser-local visit counter.</p> -->
-          </section>
-
           <nav class="panel nav-panel" aria-label="Main navigation">
             <h2>Directory</h2>
             <a href="#paper">Current Paper</a>
@@ -77,16 +78,36 @@
 
           <section class="panel contact-panel" id="links">
             <h2>Contact</h2>
-            <a href="mailto:zacharylee314@gmail.com">Email Zachary</a>
-            <a href="https://github.com/zlee-personal">GitHub: zlee-personal</a>
-            <a href="https://github.com/lee5230">GitHub: lee5230</a>
-            <a href="https://www.linkedin.com/in/zachary-lee-616879173/">LinkedIn</a>
+            <a href="mailto:lee5230@purdue.edu">
+              <i class="fa-solid fa-envelope contact-icon" aria-hidden="true"></i>
+              <span>lee5230@purdue.edu</span>
+            </a>
+            <a href="https://github.com/zlee-personal">
+              <i class="fa-brands fa-github contact-icon" aria-hidden="true"></i>
+              <span>GitHub: zlee-personal</span>
+            </a>
+            <a href="https://github.com/lee5230">
+              <i class="fa-brands fa-github contact-icon" aria-hidden="true"></i>
+              <span>GitHub: lee5230</span>
+            </a>
+            <a href="https://www.linkedin.com/in/zachary-lee-616879173/">
+              <i class="fa-brands fa-linkedin contact-icon" aria-hidden="true"></i>
+              <span>LinkedIn</span>
+            </a>
           </section>
 
           <section class="panel stamp-panel" aria-label="site status">
             <p class="construction">RESEARCH HOMEPAGE</p>
             <p>Last modified: <span id="last-modified">May 29, 2026</span></p>
             <p class="fine-print">Academic profile and project archive.</p>
+          </section>
+
+          <section class="panel visitor-panel">
+            <h2>Visitor Counter</h2>
+            <div class="counter" aria-live="polite">
+              <span id="visitor-count">000001</span>
+            </div>
+            <!-- <p class="fine-print">Browser-local visit counter.</p> -->
           </section>
         </aside>
 
@@ -98,39 +119,42 @@
               </div>
               <div class="window-body">
                 <h2 id="about-heading">Personal Profile</h2>
-                <p>
-                  I am a PhD student in Computer Science at Purdue University,
-                  focused on machine learning methods that combine physical
-                  simulation, generative modeling, and structured reasoning.
-                </p>
-                <p>
-                  My current work couples 3D Gaussian splatting with differentiable
-                  fluid simulation so generated objects can satisfy physical
-                  objectives, as well as visual ones.
-                </p>
-                <div class="keyword-cloud" aria-label="research keywords">
-                  <span>PyTorch</span>
-                  <span>CUDA</span>
-                  <span>3DGS</span>
-                  <span>Differentiable Physics</span>
-                  <span>Numerical Methods</span>
-                  <span>Neuro-Symbolic AI</span>
-                </div>
+                  <p>
+                    I am a PhD student in Computer Science at Purdue University working on
+                    3D generative models for physically functional objects.
+                  </p>
+                  <p>
+                    I design models that generate and reconstruct 3D objects with plausible
+                    appearance and useful physical behavior. My work focuses on learned 3D
+                    representations that account for geometry, materials, and simulation, with
+                    the goal of producing objects whose structure supports their intended
+                    function.
+                  </p>
               </div>
             </div>
 
-            <aside class="focus-card" aria-label="Research focus summary">
-              <h2>Research Focus</h2>
-              <p>
-                Machine learning systems that connect visual reconstruction,
-                physical simulation, and functional 3D structure.
-              </p>
-              <ul>
-                <li>3D scene representations</li>
-                <li>Differentiable physics</li>
-                <li>Generative modeling</li>
-              </ul>
+            <aside class="photo-card" aria-label="Photo of Zachary Lee">
+              <figure>
+                <img
+                  src="assets/zachary_lee_photo.jpg"
+                  width="839"
+                  height="943"
+                  alt="Zachary Lee"
+                >
+                <figcaption>Zachary Lee</figcaption>
+              </figure>
             </aside>
+
+            <div class="profile-tags keyword-cloud" aria-label="research keywords">
+              <span class="profile-tags-label">Research Keywords:</span>
+              <span>3D Generation</span>
+              <span>Physics-Guided Machine Learning</span>
+              <span>Differentiable Physics</span>
+              <span>3D Gaussian Splatting</span>
+              <span>PyTorch</span>
+              <span>Simulation</span>
+              <span>Neuro-Symbolic AI</span>
+            </div>
           </section>
 
           <section class="window research-window" id="paper" aria-labelledby="paper-heading">
@@ -179,7 +203,7 @@
               <span>Project Archive</span>
             </div>
             <div class="window-body">
-              <p class="section-kicker">Project Archive</p>
+              <!-- <p class="section-kicker">Project Archive</p> -->
               <h2 id="projects-heading">Selected Work</h2>
 
               <div class="project-grid">
@@ -232,12 +256,12 @@
               <span>Resume</span>
             </div>
             <div class="window-body">
-              <p class="section-kicker">Resume</p>
+              <!-- <p class="section-kicker">Resume</p> -->
               <h2 id="resume-heading">Education, Research, and Experience</h2>
 
               <div class="action-row">
                 <a class="big-button" href="assets/ZacharyLeeResume.pdf">Download Resume PDF</a>
-                <a class="big-button alt-button" href="mailto:zacharylee314@gmail.com">Email</a>
+                <a class="big-button alt-button" href="mailto:lee5230@purdue.edu">Email</a>
               </div>
 
               <table class="resume-table">
