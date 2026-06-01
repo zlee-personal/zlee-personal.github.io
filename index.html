@@ -8,6 +8,15 @@
       content="Zachary Lee - Purdue PhD student working on machine learning, differentiable physics, 3D Gaussian splatting, and neuro-symbolic methods."
     >
     <title>Zachary Lee's Research Zone</title>
+    <script>
+      try {
+        if (localStorage.getItem("zachary-site-mode") === "boring") {
+          document.documentElement.classList.add("boring-mode");
+        }
+      } catch (error) {
+        document.documentElement.classList.remove("boring-mode");
+      }
+    </script>
     <link rel="stylesheet" href="styles.css">
   </head>
   <body>
@@ -15,10 +24,22 @@
 
     <div class="page-shell">
       <header class="site-header" id="top">
-        <div class="badge-row" aria-label="retro web badges">
-          <span class="badge badge-hot">PURDUE CS</span>
-          <span class="badge badge-new">PG-3DGS</span>
-          <span class="badge badge-safe">MACHINE LEARNING</span>
+        <div class="mode-control">
+          <button class="mode-toggle" id="boring-toggle" type="button" aria-pressed="false">
+            Make Website Boring
+          </button>
+          <span
+            class="mode-help"
+            tabindex="0"
+            role="img"
+            aria-label="If you do not appreciate some of the bolder stylistic choices of this website, click this button to toggle it to a more traditional website format."
+          >
+            ?
+            <span class="mode-tooltip" role="tooltip">
+              If you do not appreciate some of the bolder stylistic choices of this website,
+              click this button to toggle it to a more traditional website format.
+            </span>
+          </span>
         </div>
 
         <div class="title-card">
@@ -63,7 +84,7 @@
           </section>
 
           <section class="panel stamp-panel" aria-label="site status">
-            <p class="construction blink">RESEARCH HOMEPAGE</p>
+            <p class="construction">RESEARCH HOMEPAGE</p>
             <p>Last modified: <span id="last-modified">May 29, 2026</span></p>
             <p class="fine-print">Academic profile and project archive.</p>
           </section>
@@ -85,7 +106,7 @@
                 <p>
                   My current work couples 3D Gaussian splatting with differentiable
                   fluid simulation so generated objects can satisfy physical
-                  objectives, not just visual ones.
+                  objectives, as well as visual ones.
                 </p>
                 <div class="keyword-cloud" aria-label="research keywords">
                   <span>PyTorch</span>
@@ -114,10 +135,10 @@
 
           <section class="window research-window" id="paper" aria-labelledby="paper-heading">
             <div class="window-bar">
-              <span>Current Paper</span>
+              <span>Paper</span>
             </div>
             <div class="window-body">
-              <p class="section-kicker">Current Paper</p>
+              <p class="section-kicker">Recent Paper</p>
               <h2 id="paper-heading">
                 PG-3DGS: Optimizing 3D Gaussian Splatting to Satisfy Physics Objectives
               </h2>
@@ -129,9 +150,7 @@
                 physical functionality while preserving visual quality.
               </p>
               <p>
-                Experiments include pouring and aerodynamic lift tasks. Bench-top
-                3D-printed aircraft tests compare Cessna, B-2 Spirit, and paper
-                plane geometries under identical airflow conditions.
+                We physically validate our method by 3D printing generated planes optimized for lift, and measuring their lift under identical airflow conditions.
               </p>
 
               <div class="action-row">
@@ -147,16 +166,8 @@
                     <td>May 11, 2026</td>
                   </tr>
                   <tr>
-                    <th scope="row">Subjects</th>
-                    <td>Computer Vision, Graphics, Machine Learning</td>
-                  </tr>
-                  <tr>
                     <th scope="row">Comments</th>
-                    <td>Under review for Artificial Intelligence Journal. 52 pages.</td>
-                  </tr>
-                  <tr>
-                    <th scope="row">Core idea</th>
-                    <td>Optimize 3D geometry for both visual fidelity and physical behavior.</td>
+                    <td>Submitted to Artificial Intelligence Journal. 52 pages.</td>
                   </tr>
                 </tbody>
               </table>
@@ -175,7 +186,7 @@
                 <article class="project-card">
                   <h3>Physics-Guided 3D Gaussian Splatting</h3>
                   <p>
-                    Research system coupling differentiable fluid simulation with
+                    Framework coupling differentiable fluid simulation with
                     3D Gaussian representations for physically functional object
                     generation.
                   </p>
@@ -264,7 +275,6 @@
                     <li>Purdue AI research on physically functional 3D objects from images.</li>
                     <li>MInDS Lab deep learning methods for missing orebody data.</li>
                     <li>Mining Engineering Department models for mine safety feature analysis.</li>
-                    <li>TA for Data Science and Machine Learning.</li>
                   </ul>
                 </section>
 
@@ -291,7 +301,7 @@
           <a href="#top">Back to top</a>
         </p>
         <p class="fine-print">
-          Responsive academic homepage with links to research, projects, and resume.
+          Academic homepage with links to research, projects, and resume.
         </p>
       </footer>
     </div>
