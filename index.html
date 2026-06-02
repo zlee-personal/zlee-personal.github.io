@@ -37,7 +37,7 @@
       <header class="site-header" id="top">
         <div class="mode-control">
           <button class="mode-toggle" id="boring-toggle" type="button" aria-pressed="false">
-            Toned-Down Website Toggle
+            Boring Mode
           </button>
           <span
             class="mode-help"
@@ -69,32 +69,12 @@
       <div class="layout-table">
         <aside class="sidebar" aria-label="Site navigation and contact">
           <nav class="panel nav-panel" aria-label="Main navigation">
-            <h2>Directory</h2>
+            <h2 id="nav-heading">Directory</h2>
             <a href="#paper">Current Paper</a>
             <a href="#projects">Project Archive</a>
             <a href="#resume">Resume</a>
-            <a href="#links">Links</a>
+            <a href="#links">Connect</a>
           </nav>
-
-          <section class="panel contact-panel" id="links">
-            <h2>Contact</h2>
-            <a href="mailto:lee5230@purdue.edu">
-              <i class="fa-solid fa-envelope contact-icon" aria-hidden="true"></i>
-              <span>lee5230@purdue.edu</span>
-            </a>
-            <a href="https://github.com/zlee-personal">
-              <i class="fa-brands fa-github contact-icon" aria-hidden="true"></i>
-              <span>GitHub: zlee-personal</span>
-            </a>
-            <a href="https://github.com/lee5230">
-              <i class="fa-brands fa-github contact-icon" aria-hidden="true"></i>
-              <span>GitHub: lee5230</span>
-            </a>
-            <a href="https://www.linkedin.com/in/zachary-lee-616879173/">
-              <i class="fa-brands fa-linkedin contact-icon" aria-hidden="true"></i>
-              <span>LinkedIn</span>
-            </a>
-          </section>
 
           <section class="panel stamp-panel" aria-label="site status">
             <p class="construction">RESEARCH HOMEPAGE</p>
@@ -119,17 +99,27 @@
               </div>
               <div class="window-body">
                 <h2 id="about-heading">Personal Profile</h2>
-                  <p>
-                    I am a PhD student in Computer Science at Purdue University working on
-                    3D generative models for physically functional objects.
-                  </p>
-                  <p>
-                    I design models that generate and reconstruct 3D objects with plausible
-                    appearance and useful physical behavior. My work focuses on learned 3D
-                    representations that account for geometry, materials, and simulation, with
-                    the goal of producing objects whose structure supports their intended
-                    function.
-                  </p>
+                <p>
+                  I am a PhD student in Computer Science at Purdue University working on
+                  3D generative models for physically functional objects.
+                </p>
+                <p>
+                  I design models that generate and reconstruct 3D objects with plausible
+                  appearance and useful physical behavior. My work focuses on learned 3D
+                  representations that account for geometry, materials, and simulation, with
+                  the goal of producing objects whose structure supports their intended
+                  function.
+                </p>
+                <div class="profile-tags keyword-cloud" aria-label="research keywords">
+                  <span class="profile-tags-label">Research Keywords:</span>
+                  <span>3D Generation</span>
+                  <span>Physics-Guided Machine Learning</span>
+                  <span>Differentiable Physics</span>
+                  <span>3D Gaussian Splatting</span>
+                  <span>PyTorch</span>
+                  <span>Simulation</span>
+                  <span>Neuro-Symbolic AI</span>
+                </div>
               </div>
             </div>
 
@@ -141,20 +131,28 @@
                   height="943"
                   alt="Zachary Lee"
                 >
-                <figcaption>Zachary Lee</figcaption>
               </figure>
-            </aside>
 
-            <div class="profile-tags keyword-cloud" aria-label="research keywords">
-              <span class="profile-tags-label">Research Keywords:</span>
-              <span>3D Generation</span>
-              <span>Physics-Guided Machine Learning</span>
-              <span>Differentiable Physics</span>
-              <span>3D Gaussian Splatting</span>
-              <span>PyTorch</span>
-              <span>Simulation</span>
-              <span>Neuro-Symbolic AI</span>
-            </div>
+              <section class="contact-panel photo-contact" id="links">
+                <h2>Connect</h2>
+                <a href="mailto:lee5230@purdue.edu">
+                  <i class="fa-solid fa-envelope contact-icon" aria-hidden="true"></i>
+                  <span>lee5230@purdue.edu</span>
+                </a>
+                <a href="https://github.com/zlee-personal">
+                  <i class="fa-brands fa-github contact-icon" aria-hidden="true"></i>
+                  <span>GitHub</span>
+                </a>
+                <!-- <a href="https://github.com/lee5230">
+                  <i class="fa-brands fa-github contact-icon" aria-hidden="true"></i>
+                  <span>GitHub: Purdue</span>
+                </a> -->
+                <a href="https://www.linkedin.com/in/zachary-lee-616879173/">
+                  <i class="fa-brands fa-linkedin contact-icon" aria-hidden="true"></i>
+                  <span>LinkedIn</span>
+                </a>
+              </section>
+            </aside>
           </section>
 
           <section class="window research-window" id="paper" aria-labelledby="paper-heading">
@@ -261,7 +259,7 @@
 
               <div class="action-row">
                 <a class="big-button" href="assets/ZacharyLeeResume.pdf">Download Resume PDF</a>
-                <a class="big-button alt-button" href="mailto:lee5230@purdue.edu">Email</a>
+                <!-- <a class="big-button alt-button" href="mailto:lee5230@purdue.edu">Email</a> -->
               </div>
 
               <table class="resume-table">
