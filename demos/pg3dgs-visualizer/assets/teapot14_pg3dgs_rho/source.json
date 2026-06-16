@@ -1,0 +1,33 @@
+{
+  "source": {
+    "argsCheckpoint": "results/final_reruns/ours_march_26/teapot_14/teapot_14_2026-03-27_12-07-25/physics_loss_axis_[1.0, 0.0, 0.0]_angle_117/args_checkpoints/args_checkpoint_9000.pt",
+    "sdfCheckpoint": null,
+    "nerfCheckpoint": null,
+    "loss": 0.0
+  },
+  "summary": {
+    "mesh": {
+      "vertices": 16194,
+      "faces": 32360,
+      "isoLevel": 0.5
+    },
+    "meshFrames": {
+      "count": 0,
+      "vertices": [
+        0,
+        0
+      ],
+      "faces": [
+        0,
+        0
+      ]
+    },
+    "shape": [
+      84,
+      84,
+      130
+    ],
+    "frames": 26,
+    "simFrames": 50
+  }
+}

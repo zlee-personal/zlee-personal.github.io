@@ -1,0 +1,33 @@
+{
+  "source": {
+    "argsCheckpoint": "results/planes_3dgs_normal_opacity/b2/b2_2026-03-10_20-34-53/physics_loss_axis_[1.0, 0.0, 0.0]_angle_0/args_checkpoints/args_checkpoint_7500.pt",
+    "sdfCheckpoint": null,
+    "nerfCheckpoint": null,
+    "loss": 0.0
+  },
+  "summary": {
+    "mesh": {
+      "vertices": 912,
+      "faces": 1820,
+      "isoLevel": 0.5
+    },
+    "meshFrames": {
+      "count": 28,
+      "vertices": [
+        852,
+        936
+      ],
+      "faces": [
+        1700,
+        1868
+      ]
+    },
+    "shape": [
+      100,
+      164,
+      64
+    ],
+    "frames": 28,
+    "simFrames": 60
+  }
+}

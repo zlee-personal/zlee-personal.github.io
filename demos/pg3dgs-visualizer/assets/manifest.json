@@ -1,0 +1,496 @@
+{
+  "datasets": [
+    {
+      "id": "teapot14_3dgs_rho",
+      "label": "Teapot 14 3DGS rho",
+      "kind": "rho",
+      "mesh": "teapot14_3dgs_rho/mesh.glb",
+      "field": "teapot14_3dgs_rho/field.json",
+      "source": {
+        "argsCheckpoint": "results/final_reruns/3dgs_march_26/teapot_14/teapot_14_2026-03-27_12-06-21/physics_loss_axis_[1.0, 0.0, 0.0]_angle_117/args_checkpoints/args_checkpoint_9000.pt",
+        "sdfCheckpoint": null,
+        "nerfCheckpoint": null,
+        "loss": 0.0
+      },
+      "summary": {
+        "mesh": {
+          "vertices": 14655,
+          "faces": 29302,
+          "isoLevel": 0.5
+        },
+        "meshFrames": {
+          "count": 0,
+          "vertices": [
+            0,
+            0
+          ],
+          "faces": [
+            0,
+            0
+          ]
+        },
+        "shape": [
+          84,
+          84,
+          130
+        ],
+        "frames": 26,
+        "simFrames": 50
+      }
+    },
+    {
+      "id": "teapot14_pg3dgs_rho",
+      "label": "Teapot 14 PG3DGS rho",
+      "kind": "rho",
+      "mesh": "teapot14_pg3dgs_rho/mesh.glb",
+      "field": "teapot14_pg3dgs_rho/field.json",
+      "source": {
+        "argsCheckpoint": "results/final_reruns/ours_march_26/teapot_14/teapot_14_2026-03-27_12-07-25/physics_loss_axis_[1.0, 0.0, 0.0]_angle_117/args_checkpoints/args_checkpoint_9000.pt",
+        "sdfCheckpoint": null,
+        "nerfCheckpoint": null,
+        "loss": 0.0
+      },
+      "summary": {
+        "mesh": {
+          "vertices": 16194,
+          "faces": 32360,
+          "isoLevel": 0.5
+        },
+        "meshFrames": {
+          "count": 0,
+          "vertices": [
+            0,
+            0
+          ],
+          "faces": [
+            0,
+            0
+          ]
+        },
+        "shape": [
+          84,
+          84,
+          130
+        ],
+        "frames": 26,
+        "simFrames": 50
+      }
+    },
+    {
+      "id": "b2_3dgs_convection",
+      "label": "B2 3DGS velocity",
+      "kind": "velocity",
+      "mesh": "b2_3dgs_convection/mesh.glb",
+      "field": "b2_3dgs_convection/field.json",
+      "source": {
+        "argsCheckpoint": "results/planes_3dgs_normal_opacity/b2/b2_2026-03-10_20-34-53/physics_loss_axis_[1.0, 0.0, 0.0]_angle_0/args_checkpoints/args_checkpoint_7500.pt",
+        "sdfCheckpoint": null,
+        "nerfCheckpoint": null,
+        "loss": 0.0
+      },
+      "summary": {
+        "mesh": {
+          "vertices": 912,
+          "faces": 1820,
+          "isoLevel": 0.5
+        },
+        "meshFrames": {
+          "count": 28,
+          "vertices": [
+            852,
+            936
+          ],
+          "faces": [
+            1700,
+            1868
+          ]
+        },
+        "shape": [
+          100,
+          164,
+          64
+        ],
+        "frames": 28,
+        "simFrames": 60
+      },
+      "meshFrames": [
+        {
+          "index": 0,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0000.glb",
+          "vertices": 912,
+          "faces": 1820
+        },
+        {
+          "index": 2,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0001.glb",
+          "vertices": 894,
+          "faces": 1784
+        },
+        {
+          "index": 4,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0002.glb",
+          "vertices": 900,
+          "faces": 1796
+        },
+        {
+          "index": 7,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0003.glb",
+          "vertices": 914,
+          "faces": 1824
+        },
+        {
+          "index": 9,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0004.glb",
+          "vertices": 936,
+          "faces": 1868
+        },
+        {
+          "index": 11,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0005.glb",
+          "vertices": 920,
+          "faces": 1836
+        },
+        {
+          "index": 13,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0006.glb",
+          "vertices": 870,
+          "faces": 1736
+        },
+        {
+          "index": 15,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0007.glb",
+          "vertices": 872,
+          "faces": 1740
+        },
+        {
+          "index": 17,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0008.glb",
+          "vertices": 868,
+          "faces": 1732
+        },
+        {
+          "index": 20,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0009.glb",
+          "vertices": 882,
+          "faces": 1760
+        },
+        {
+          "index": 22,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0010.glb",
+          "vertices": 878,
+          "faces": 1752
+        },
+        {
+          "index": 24,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0011.glb",
+          "vertices": 882,
+          "faces": 1760
+        },
+        {
+          "index": 26,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0012.glb",
+          "vertices": 896,
+          "faces": 1788
+        },
+        {
+          "index": 28,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0013.glb",
+          "vertices": 902,
+          "faces": 1800
+        },
+        {
+          "index": 31,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0014.glb",
+          "vertices": 920,
+          "faces": 1836
+        },
+        {
+          "index": 33,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0015.glb",
+          "vertices": 868,
+          "faces": 1732
+        },
+        {
+          "index": 35,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0016.glb",
+          "vertices": 882,
+          "faces": 1760
+        },
+        {
+          "index": 37,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0017.glb",
+          "vertices": 872,
+          "faces": 1740
+        },
+        {
+          "index": 39,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0018.glb",
+          "vertices": 888,
+          "faces": 1772
+        },
+        {
+          "index": 42,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0019.glb",
+          "vertices": 930,
+          "faces": 1856
+        },
+        {
+          "index": 44,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0020.glb",
+          "vertices": 908,
+          "faces": 1812
+        },
+        {
+          "index": 46,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0021.glb",
+          "vertices": 858,
+          "faces": 1712
+        },
+        {
+          "index": 48,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0022.glb",
+          "vertices": 888,
+          "faces": 1772
+        },
+        {
+          "index": 50,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0023.glb",
+          "vertices": 884,
+          "faces": 1764
+        },
+        {
+          "index": 52,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0024.glb",
+          "vertices": 914,
+          "faces": 1824
+        },
+        {
+          "index": 55,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0025.glb",
+          "vertices": 924,
+          "faces": 1844
+        },
+        {
+          "index": 57,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0026.glb",
+          "vertices": 852,
+          "faces": 1700
+        },
+        {
+          "index": 59,
+          "path": "b2_3dgs_convection/mesh_frames/frame_0027.glb",
+          "vertices": 878,
+          "faces": 1752
+        }
+      ]
+    },
+    {
+      "id": "b2_pg3dgs_convection",
+      "label": "B2 PG3DGS velocity",
+      "kind": "velocity",
+      "mesh": "b2_pg3dgs_convection/mesh.glb",
+      "field": "b2_pg3dgs_convection/field.json",
+      "source": {
+        "argsCheckpoint": "results/planes_3dgs_normal_opacity/b2/b2_2026-03-10_20-34-53/physics_loss_axis_[1.0, 0.0, 0.0]_angle_0/args_checkpoints/args_checkpoint_14950.pt",
+        "sdfCheckpoint": null,
+        "nerfCheckpoint": null,
+        "loss": 0.0
+      },
+      "summary": {
+        "mesh": {
+          "vertices": 944,
+          "faces": 1884,
+          "isoLevel": 0.5
+        },
+        "meshFrames": {
+          "count": 28,
+          "vertices": [
+            880,
+            944
+          ],
+          "faces": [
+            1756,
+            1884
+          ]
+        },
+        "shape": [
+          100,
+          164,
+          64
+        ],
+        "frames": 28,
+        "simFrames": 60
+      },
+      "meshFrames": [
+        {
+          "index": 0,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0000.glb",
+          "vertices": 944,
+          "faces": 1884
+        },
+        {
+          "index": 2,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0001.glb",
+          "vertices": 930,
+          "faces": 1856
+        },
+        {
+          "index": 4,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0002.glb",
+          "vertices": 894,
+          "faces": 1784
+        },
+        {
+          "index": 7,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0003.glb",
+          "vertices": 932,
+          "faces": 1860
+        },
+        {
+          "index": 9,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0004.glb",
+          "vertices": 930,
+          "faces": 1856
+        },
+        {
+          "index": 11,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0005.glb",
+          "vertices": 932,
+          "faces": 1860
+        },
+        {
+          "index": 13,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0006.glb",
+          "vertices": 906,
+          "faces": 1808
+        },
+        {
+          "index": 15,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0007.glb",
+          "vertices": 926,
+          "faces": 1848
+        },
+        {
+          "index": 17,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0008.glb",
+          "vertices": 902,
+          "faces": 1800
+        },
+        {
+          "index": 20,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0009.glb",
+          "vertices": 938,
+          "faces": 1872
+        },
+        {
+          "index": 22,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0010.glb",
+          "vertices": 890,
+          "faces": 1776
+        },
+        {
+          "index": 24,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0011.glb",
+          "vertices": 928,
+          "faces": 1852
+        },
+        {
+          "index": 26,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0012.glb",
+          "vertices": 900,
+          "faces": 1796
+        },
+        {
+          "index": 28,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0013.glb",
+          "vertices": 934,
+          "faces": 1864
+        },
+        {
+          "index": 31,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0014.glb",
+          "vertices": 910,
+          "faces": 1816
+        },
+        {
+          "index": 33,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0015.glb",
+          "vertices": 940,
+          "faces": 1876
+        },
+        {
+          "index": 35,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0016.glb",
+          "vertices": 906,
+          "faces": 1808
+        },
+        {
+          "index": 37,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0017.glb",
+          "vertices": 932,
+          "faces": 1860
+        },
+        {
+          "index": 39,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0018.glb",
+          "vertices": 890,
+          "faces": 1776
+        },
+        {
+          "index": 42,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0019.glb",
+          "vertices": 902,
+          "faces": 1800
+        },
+        {
+          "index": 44,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0020.glb",
+          "vertices": 932,
+          "faces": 1860
+        },
+        {
+          "index": 46,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0021.glb",
+          "vertices": 924,
+          "faces": 1844
+        },
+        {
+          "index": 48,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0022.glb",
+          "vertices": 934,
+          "faces": 1864
+        },
+        {
+          "index": 50,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0023.glb",
+          "vertices": 932,
+          "faces": 1860
+        },
+        {
+          "index": 52,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0024.glb",
+          "vertices": 924,
+          "faces": 1844
+        },
+        {
+          "index": 55,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0025.glb",
+          "vertices": 894,
+          "faces": 1784
+        },
+        {
+          "index": 57,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0026.glb",
+          "vertices": 928,
+          "faces": 1852
+        },
+        {
+          "index": 59,
+          "path": "b2_pg3dgs_convection/mesh_frames/frame_0027.glb",
+          "vertices": 880,
+          "faces": 1756
+        }
+      ]
+    }
+  ]
+}

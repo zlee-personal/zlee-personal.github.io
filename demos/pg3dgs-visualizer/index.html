@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>PG-3DGS Simulation Visualizer</title>
+    <link rel="stylesheet" href="./styles.css" />
+    <script type="importmap">
+      {
+        "imports": {
+          "three": "https://unpkg.com/three@0.165.0/build/three.module.js",
+          "three/addons/": "https://unpkg.com/three@0.165.0/examples/jsm/"
+        }
+      }
+    </script>
+  </head>
+  <body>
+    <main id="app">
+      <button
+        id="panelToggle"
+        class="panel-toggle"
+        type="button"
+        aria-controls="panelBody"
+        aria-expanded="true"
+        aria-label="Collapse controls"
+      >
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+        <span class="menu-line"></span>
+      </button>
+      <div class="viewer-grid" id="viewerGrid">
+        <section class="viewer-pane" id="panePrimary" aria-label="Primary visualization">
+          <canvas id="scene"></canvas>
+          <div class="method-label" id="primaryPaneLabel"></div>
+        </section>
+        <section class="viewer-pane compare-pane" id="paneCompare" aria-label="Comparison visualization" hidden>
+          <canvas id="sceneCompare"></canvas>
+          <div class="method-label" id="comparePaneLabel"></div>
+        </section>
+      </div>
+
+      <section class="panel" aria-label="Visualizer controls">
+        <div class="panel-header">
+          <div>
+            <h1>PG-3DGS Simulation Visualizer</h1>
+            <p id="datasetMeta">Loading assets</p>
+          </div>
+        </div>
+
+        <div class="panel-body" id="panelBody">
+          <a class="home-link" href="../../">Back to Homepage</a>
+
+          <p class="menu-intro">
+            Selected fluid simulation results on a teapot and plane, optimizing for pouring a tracker fluid and producing lift, respectively. Select from the dropdown and options to compare a baseline method (3D Gaussian Splatting) with our method (Physics Guided 3D Gaussian Splatting).
+          </p>
+
+          <label class="control">
+            <span>Experiment</span>
+            <select id="datasetSelect"></select>
+          </label>
+
+          <div class="control">
+            <span>View</span>
+            <div class="segmented" id="viewMode">
+              <button type="button" data-view-mode="single">Single</button>
+              <button type="button" data-view-mode="compare">Compare</button>
+            </div>
+          </div>
+
+          <div class="control">
+            <span>Field</span>
+            <div class="segmented" id="fieldMode">
+              <button type="button" data-mode="rho">Rho</button>
+              <button type="button" data-mode="velocity">Velocity</button>
+            </div>
+          </div>
+
+          <div class="control">
+            <span>Camera</span>
+            <div class="segmented triple" id="cameraMode">
+              <button type="button" data-view="side">Side</button>
+              <button type="button" data-view="alt">Alt</button>
+              <button type="button" data-view="iso">Iso</button>
+            </div>
+          </div>
+
+          <label class="check-row">
+            <input id="meshToggle" type="checkbox" checked />
+            <span>Mesh</span>
+          </label>
+
+          <div class="check-grid" aria-label="Field visibility">
+            <label class="check-row">
+              <input id="pointsToggle" type="checkbox" checked />
+              <span>Points</span>
+            </label>
+            <label class="check-row">
+              <input id="linesToggle" type="checkbox" checked />
+              <span>Lines</span>
+            </label>
+          </div>
+
+          <label class="control">
+            <span>Field Opacity</span>
+            <input id="opacitySlider" type="range" min="0.05" max="1" step="0.05" value="0.75" />
+          </label>
+
+          <label class="control">
+            <span>Point Size</span>
+            <input id="pointSizeSlider" type="range" min="0.004" max="0.08" step="0.002" value="0.08" />
+          </label>
+
+          <label class="control">
+            <span>Line Size</span>
+            <input id="lineSizeSlider" type="range" min="0.15" max="1.8" step="0.05" value="0.15" />
+          </label>
+
+          <p class="status" id="status">Loading manifest...</p>
+        </div>
+      </section>
+
+      <section class="timeline" aria-label="Animation controls">
+        <button id="playButton" type="button" aria-label="Play or pause">Pause</button>
+        <input id="frameSlider" type="range" min="0" max="0" step="1" value="0" />
+        <output id="frameLabel">0 / 0</output>
+      </section>
+    </main>
+
+    <script type="module" src="./app.js"></script>
+  </body>
+</html>
