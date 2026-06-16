@@ -56,6 +56,7 @@ input {
   grid-area: viewer;
   display: grid;
   grid-template-columns: minmax(0, 1fr);
+  grid-template-rows: auto minmax(0, 1fr);
   background: #101214;
   min-width: 0;
   min-height: 0;
@@ -65,9 +66,47 @@ input {
   grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
 }
 
+.viewer-topbar {
+  grid-column: 1 / -1;
+  display: flex;
+  align-items: center;
+  min-width: 0;
+  min-height: 50px;
+  padding: 6px 16px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
+  background: #151a1d;
+}
+
+#app.controls-collapsed .viewer-topbar {
+  padding-left: 98px;
+}
+
+.experiment-tabs {
+  display: inline-grid;
+  grid-template-columns: repeat(2, minmax(108px, 1fr));
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.16);
+  border-radius: 7px;
+  background: #182024;
+}
+
+.experiment-tabs button {
+  min-height: 36px;
+  border: 0;
+  border-radius: 0;
+  background: transparent;
+  color: #d6e0e6;
+  cursor: pointer;
+  font-weight: 750;
+}
+
+.experiment-tabs button[aria-selected="true"] {
+  background: #2c7a7b;
+  color: #ffffff;
+}
+
 .viewer-pane {
-  display: grid;
-  grid-template-rows: auto minmax(0, 1fr);
+  position: relative;
   min-width: 0;
   min-height: 0;
   overflow: hidden;
@@ -90,40 +129,44 @@ input {
 }
 
 .method-label {
-  order: -1;
+  position: absolute;
+  top: 12px;
+  left: 12px;
   display: flex;
   align-items: flex-start;
-  gap: 10px;
-  max-width: none;
-  min-height: 48px;
-  padding: 10px 16px;
-  border: 0;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.16);
-  background: #151a1d;
-  box-shadow: none;
+  gap: 12px;
+  max-width: min(390px, calc(100% - 24px));
+  min-height: 0;
+  padding: 10px 12px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(13, 17, 19, 0.82);
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.32);
   color: #f4f7f9;
   font-size: 0.86rem;
   line-height: 1.25;
   pointer-events: none;
+  z-index: 5;
+  backdrop-filter: blur(10px);
 }
 
 .method-label.baseline {
-  border-bottom-color: rgba(181, 196, 207, 0.42);
+  border-color: rgba(181, 196, 207, 0.42);
 }
 
 .method-label.ours {
-  border-bottom-color: rgba(242, 166, 90, 0.72);
+  border-color: rgba(242, 166, 90, 0.72);
 }
 
 .method-badge {
   flex: 0 0 auto;
   display: grid;
   align-content: center;
-  gap: 1px;
-  min-height: 34px;
-  padding: 4px 8px;
+  gap: 2px;
+  min-height: 42px;
+  padding: 6px 10px;
   border-radius: 7px;
-  font-size: 0.72rem;
+  font-size: 0.8rem;
   font-weight: 800;
   line-height: 1.05;
   letter-spacing: 0;
@@ -147,21 +190,51 @@ input {
 
 .method-label-body {
   display: grid;
-  gap: 3px;
+  align-content: center;
+  gap: 2px;
   min-width: 0;
-}
-
-.method-object {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  color: #ffffff;
-  font-weight: 750;
 }
 
 .method-outcome {
   color: #d6e0e6;
-  font-size: 0.8rem;
+  font-size: 0.86rem;
+  line-height: 1.18;
+  white-space: nowrap;
+}
+
+.loading-overlay {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  padding: 18px;
+  background: rgba(16, 18, 20, 0.5);
+  pointer-events: none;
+  z-index: 8;
+}
+
+.loading-overlay[hidden] {
+  display: none;
+}
+
+.loading-popup {
+  display: inline-grid;
+  min-width: 112px;
+  min-height: 44px;
+  place-items: center;
+  padding: 10px 16px;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  border-radius: 8px;
+  background: rgba(21, 26, 29, 0.92);
+  box-shadow: 0 14px 36px rgba(0, 0, 0, 0.34);
+  color: #f4f7f9;
+  font-size: 0.9rem;
+  font-weight: 800;
+}
+
+.loading-overlay.error .loading-popup {
+  border-color: rgba(242, 166, 90, 0.62);
+  color: #ffd5a6;
 }
 
 .panel {
@@ -198,11 +271,13 @@ input {
   position: absolute;
   top: 6px;
   left: 12px;
-  display: inline-grid;
-  place-content: center;
-  gap: 4px;
-  width: 38px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  width: auto;
   height: 38px;
+  padding: 0 11px 0 9px;
   border: 1px solid rgba(255, 255, 255, 0.16);
   border-radius: 6px;
   background: #1d2428;
@@ -211,16 +286,28 @@ input {
   z-index: 40;
 }
 
-#app.controls-collapsed .viewer-pane:first-of-type .method-label {
-  padding-left: 76px;
+.help-icon {
+  display: grid;
+  width: 18px;
+  height: 18px;
+  place-items: center;
+  border: 1px solid currentColor;
+  border-radius: 50%;
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 1;
 }
 
-.menu-line {
-  display: block;
-  width: 18px;
-  height: 2px;
-  border-radius: 999px;
-  background: currentColor;
+.help-text {
+  font-size: 0.86rem;
+  font-weight: 750;
+}
+
+.close-icon {
+  font-size: 0.78rem;
+  font-weight: 800;
+  line-height: 0;
+  padding-bottom: 1px;
 }
 
 .home-link {
@@ -241,6 +328,12 @@ input {
 .menu-intro {
   color: #d6e0e6;
   font-size: 0.86rem;
+  line-height: 1.42;
+}
+
+.field-description {
+  color: #aeb9c2;
+  font-size: 0.82rem;
   line-height: 1.42;
 }
 
@@ -329,16 +422,6 @@ select {
   font-size: 0.86rem;
 }
 
-.check-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 10px;
-}
-
-.check-grid .check-row {
-  margin-top: 12px;
-}
-
 .check-row input {
   width: 16px;
   height: 16px;
@@ -395,42 +478,60 @@ input[type="range"] {
 
   .viewer-grid.compare {
     grid-template-columns: minmax(0, 1fr);
-    grid-template-rows: minmax(0, 1fr) minmax(0, 1fr);
+    grid-template-rows: auto minmax(0, 1fr) minmax(0, 1fr);
+  }
+
+  .viewer-topbar,
+  #app.controls-collapsed .viewer-topbar {
+    position: relative;
+    z-index: 35;
+    min-height: 50px;
+    padding: 6px 8px 6px 88px;
+  }
+
+  .experiment-tabs {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    width: 100%;
+    max-width: none;
+  }
+
+  .experiment-tabs button {
+    min-height: 34px;
+    padding: 0 8px;
+    font-size: 0.84rem;
   }
 
   .viewer-grid.compare .compare-pane {
-    border-top: 1px solid rgba(255, 255, 255, 0.14);
+    border-top: 8px solid #0b0e10;
     border-left: 0;
   }
 
   .method-label {
-    min-height: 48px;
+    top: 10px;
+    left: 10px;
+    max-width: calc(100% - 20px);
     padding: 8px 10px;
     font-size: 0.78rem;
   }
 
-  .viewer-grid.compare .method-label,
-  .viewer-pane:first-of-type .method-label,
-  #app.controls-collapsed .viewer-pane:first-of-type .method-label {
-    padding-left: 76px;
-  }
-
   .method-badge {
-    font-size: 0.68rem;
+    min-height: 38px;
+    padding: 5px 8px;
+    font-size: 0.74rem;
   }
 
   .method-outcome {
-    font-size: 0.74rem;
+    font-size: 0.8rem;
   }
 
   .panel {
     position: absolute;
-    top: 0;
+    top: 50px;
     left: 0;
     width: 100%;
-    max-height: min(72vh, calc(100dvh - 84px));
+    max-height: min(72vh, calc(100dvh - 134px));
     margin: 0;
-    padding: 62px 13px 13px;
+    padding: 13px;
     border: 0;
     border-bottom: 1px solid rgba(255, 255, 255, 0.14);
     z-index: 30;
@@ -445,8 +546,21 @@ input[type="range"] {
   }
 
   .panel-toggle {
-    width: 42px;
-    height: 42px;
+    top: 6px;
+    left: 8px;
+    height: 38px;
+    padding: 0 8px 0 7px;
+    gap: 5px;
+  }
+
+  .help-icon {
+    width: 16px;
+    height: 16px;
+    font-size: 0.72rem;
+  }
+
+  .help-text {
+    font-size: 0.8rem;
   }
 
   h1 {

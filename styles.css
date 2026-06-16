@@ -688,6 +688,36 @@ h1 {
   box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.32);
 }
 
+.demo-button {
+  flex: 0 1 auto;
+  max-width: 100%;
+  background:
+    linear-gradient(180deg, #fff200 0%, #ff1493 52%, #10005c 100%);
+  color: #fff;
+  font-size: 1.05rem;
+  text-align: center;
+  white-space: nowrap;
+  text-shadow:
+    1px 1px 0 #000,
+    0 0 8px rgba(255, 242, 0, 0.85);
+  box-shadow:
+    5px 5px 0 rgba(0, 0, 0, 0.36),
+    0 0 0 3px var(--laser-blue);
+  animation: demo-button-glow 1.45s ease-in-out infinite alternate;
+}
+
+.demo-button:visited {
+  color: #fff;
+}
+
+.demo-button:hover,
+.demo-button:focus-visible {
+  background:
+    linear-gradient(180deg, #fff200 0%, #ff1493 52%, #10005c 100%);
+  color: #fff;
+  animation-duration: 0.75s;
+}
+
 .alt-button {
   background: linear-gradient(180deg, var(--laser-blue), #00a1ff);
   color: #0000ee;
@@ -804,6 +834,33 @@ h1 {
   text-shadow:
     1px 1px 0 #000,
     0 0 8px var(--laser-blue);
+}
+
+.project-demo-link {
+  display: inline-block;
+  margin-top: 0.25rem;
+  padding: 0.35rem 0.55rem;
+  border-width: 3px;
+  border-style: outset;
+  border-color: #fff #555 #555 #fff;
+  background: linear-gradient(180deg, var(--acid-green), var(--laser-blue));
+  color: var(--ink-strong);
+  font-family: "Courier New", monospace;
+  font-weight: 900;
+  text-decoration: none;
+  text-transform: uppercase;
+  box-shadow: 3px 3px 0 rgba(0, 0, 0, 0.28);
+}
+
+.project-demo-link:visited {
+  color: var(--ink-strong);
+}
+
+.project-demo-link:hover,
+.project-demo-link:focus-visible {
+  background: linear-gradient(180deg, var(--acid-green), var(--laser-blue));
+  color: #000;
+  transform: translate(-1px, -1px);
 }
 
 .tag-strip {
@@ -1310,6 +1367,44 @@ h1 {
   background: #fff;
 }
 
+.boring-mode .demo-button,
+.boring-mode .action-row .demo-button,
+.boring-mode .project-demo-link {
+  display: inline-flex;
+  flex: 0 1 auto;
+  max-width: 100%;
+  align-items: center;
+  justify-content: center;
+  width: fit-content;
+  padding: 0.5rem 0.8rem;
+  border: 1px solid #1d4ed8;
+  border-radius: 0.5rem;
+  background: #1d4ed8;
+  color: #fff;
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+  font-weight: 800;
+  text-decoration: none;
+  text-transform: none;
+  box-shadow: none;
+}
+
+.boring-mode .demo-button:visited,
+.boring-mode .action-row .demo-button:visited,
+.boring-mode .project-demo-link:visited {
+  color: #fff;
+}
+
+.boring-mode .demo-button:hover,
+.boring-mode .demo-button:focus-visible,
+.boring-mode .action-row .demo-button:hover,
+.boring-mode .action-row .demo-button:focus-visible,
+.boring-mode .project-demo-link:hover,
+.boring-mode .project-demo-link:focus-visible {
+  background: #1e40af;
+  color: #fff;
+  outline: 2px solid #93c5fd;
+}
+
 @media (max-width: 860px) {
   .boring-mode .layout-table {
     display: grid;
@@ -1429,6 +1524,23 @@ h1 {
   }
 }
 
+@keyframes demo-button-glow {
+  0% {
+    box-shadow:
+      5px 5px 0 rgba(0, 0, 0, 0.36),
+      0 0 0 3px var(--laser-blue),
+      0 0 12px rgba(0, 245, 255, 0.55);
+  }
+
+  100% {
+    box-shadow:
+      5px 5px 0 rgba(0, 0, 0, 0.36),
+      0 0 0 5px var(--banana),
+      0 0 22px rgba(0, 245, 255, 0.82),
+      0 0 38px rgba(255, 20, 147, 0.68);
+  }
+}
+
 @keyframes click-burst {
   to {
     opacity: 0;
@@ -1517,6 +1629,12 @@ h1 {
     right: 0.75rem;
     left: 0.75rem;
     width: auto;
+  }
+
+  .demo-button,
+  .boring-mode .action-row .demo-button {
+    white-space: normal;
+    overflow-wrap: anywhere;
   }
 
   .stats-table,
@@ -1643,6 +1761,7 @@ h1 {
   }
 
   h1,
+  .demo-button,
   .click-burst,
   .boring-mode .mode-toggle {
     animation: none !important;

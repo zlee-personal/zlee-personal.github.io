@@ -2,35 +2,36 @@ import * as THREE from "three";
 import { GLTFLoader } from "three/addons/loaders/GLTFLoader.js";
 import { OrbitControls } from "three/addons/controls/OrbitControls.js";
 
-const datasetSelect = document.querySelector("#datasetSelect");
 const datasetMeta = document.querySelector("#datasetMeta");
 const statusEl = document.querySelector("#status");
 const frameSlider = document.querySelector("#frameSlider");
 const frameLabel = document.querySelector("#frameLabel");
 const playButton = document.querySelector("#playButton");
 const meshToggle = document.querySelector("#meshToggle");
-const pointsToggle = document.querySelector("#pointsToggle");
-const linesToggle = document.querySelector("#linesToggle");
-const opacitySlider = document.querySelector("#opacitySlider");
-const pointSizeSlider = document.querySelector("#pointSizeSlider");
-const lineSizeSlider = document.querySelector("#lineSizeSlider");
+const fieldToggle = document.querySelector("#fieldToggle");
 const fieldModeEl = document.querySelector("#fieldMode");
 const cameraModeEl = document.querySelector("#cameraMode");
-const viewModeEl = document.querySelector("#viewMode");
+const experimentTabs = document.querySelector("#experimentTabs");
+const fieldDescription = document.querySelector("#fieldDescription");
 const appEl = document.querySelector("#app");
 const panelEl = document.querySelector(".panel");
 const panelToggle = document.querySelector("#panelToggle");
 const viewerGridEl = document.querySelector("#viewerGrid");
+const primaryLoadingEl = document.querySelector("#primaryLoading");
+const compareLoadingEl = document.querySelector("#compareLoading");
 
 const loader = new GLTFLoader();
 const DEFAULT_CAMERA_PRESET = {
   view: new THREE.Vector3(1.7, 1.1, 1.6),
   distance: 2.6,
 };
+const FIELD_OPACITY = 0.75;
+const RHO_POINT_SIZE = 0.08;
+const VELOCITY_LINE_SCALE = 0.15;
 
 const state = {
   manifest: null,
-  viewMode: "compare",
+  experiment: "b2",
   fieldMode: "rho",
   cameraMode: "side",
   frame: 0,
@@ -47,6 +48,55 @@ function setStatus(message) {
   statusEl.textContent = message;
 }
 
+function setViewerLoading(viewer, loading, message = "Loading", error = false) {
+  if (!viewer.loadingEl) return;
+  const popup = viewer.loadingEl.querySelector(".loading-popup");
+  if (popup) {
+    popup.textContent = message;
+  }
+  viewer.loadingEl.classList.toggle("error", error);
+  viewer.loadingEl.hidden = !loading;
+}
+
+function setComparisonLoading(loading, message = "Loading", error = false) {
+  viewers.forEach((viewer) => {
+    setViewerLoading(viewer, loading, message, error);
+  });
+}
+
+function setComparisonError(message) {
+  setComparisonLoading(true, message, true);
+}
+
+function updatePanelToggleContent(collapsed) {
+  panelToggle.replaceChildren();
+
+  if (collapsed) {
+    const icon = document.createElement("span");
+    icon.className = "help-icon";
+    icon.setAttribute("aria-hidden", "true");
+    icon.textContent = "?";
+
+    const text = document.createElement("span");
+    text.className = "help-text";
+    text.textContent = "Help";
+
+    panelToggle.append(icon, text);
+    return;
+  }
+
+  const icon = document.createElement("span");
+  icon.className = "help-icon close-icon";
+  icon.setAttribute("aria-hidden", "true");
+  icon.textContent = "x";
+
+  const text = document.createElement("span");
+  text.className = "help-text";
+  text.textContent = "Help";
+
+  panelToggle.append(icon, text);
+}
+
 function setPanelCollapsed(collapsed, userInitiated = false) {
   if (userInitiated) {
     panelChoiceTouched = true;
@@ -55,7 +105,8 @@ function setPanelCollapsed(collapsed, userInitiated = false) {
   panelEl.classList.toggle("collapsed", collapsed);
   panelToggle.classList.toggle("active", !collapsed);
   panelToggle.setAttribute("aria-expanded", String(!collapsed));
-  panelToggle.setAttribute("aria-label", collapsed ? "Expand controls" : "Collapse controls");
+  panelToggle.setAttribute("aria-label", collapsed ? "Expand help" : "Collapse help");
+  updatePanelToggleContent(collapsed);
   resize();
   scheduleViewerResize();
   window.setTimeout(scheduleViewerResize, 60);
@@ -86,7 +137,7 @@ function makeScene() {
   return { scene, contentRoot };
 }
 
-function createViewer({ pane, canvas, labelEl }) {
+function createViewer({ pane, canvas, labelEl, loadingEl }) {
   const { scene, contentRoot } = makeScene();
   const camera = new THREE.PerspectiveCamera(45, 1, 0.01, 100);
   camera.position.set(4.2, 2.8, 4.2);
@@ -104,6 +155,7 @@ function createViewer({ pane, canvas, labelEl }) {
     pane,
     canvas,
     labelEl,
+    loadingEl,
     scene,
     contentRoot,
     camera,
@@ -116,9 +168,7 @@ function createViewer({ pane, canvas, labelEl }) {
   };
 
   controls.addEventListener("change", () => {
-    if (state.viewMode === "compare") {
-      syncCompareCameras(viewer);
-    }
+    syncCompareCameras(viewer);
   });
 
   return viewer;
@@ -129,11 +179,13 @@ const viewers = [
     pane: document.querySelector("#panePrimary"),
     canvas: document.querySelector("#scene"),
     labelEl: document.querySelector("#primaryPaneLabel"),
+    loadingEl: primaryLoadingEl,
   }),
   createViewer({
     pane: document.querySelector("#paneCompare"),
     canvas: document.querySelector("#sceneCompare"),
     labelEl: document.querySelector("#comparePaneLabel"),
+    loadingEl: compareLoadingEl,
   }),
 ];
 
@@ -144,7 +196,7 @@ if (window.ResizeObserver) {
 }
 
 function activeViewers() {
-  return state.viewMode === "compare" ? viewers : [viewers[0]];
+  return viewers;
 }
 
 function resizeViewer(viewer) {
@@ -208,33 +260,24 @@ function datasetObjectKey(entry) {
 
 function datasetObjectLabel(entry) {
   const key = datasetObjectKey(entry);
-  if (key === "teapot14") return "Teapot 14";
+  if (key === "teapot14") return "Teapot";
   if (key === "b2") return "B2 Plane";
-  return entry?.label || "Dataset";
+  return entry?.label || "Experiment";
 }
 
-function fieldLabel(entry) {
-  if (entry?.kind === "rho") return "rho";
-  if (entry?.kind === "velocity") return "velocity";
-  return entry?.kind || "field";
-}
-
-function optionLabel(entry) {
-  const method = datasetMethod(entry);
-  return `${datasetObjectLabel(entry)} | ${method.label} | ${fieldLabel(entry)}`;
-}
-
-function labelOutcome(entry, method) {
+function labelOutcomeLines(entry, method) {
   const objectKey = datasetObjectKey(entry);
   if (objectKey === "teapot14") {
-    return method.key === "ours" ? "PG-3DGS can pour" : "3DGS cannot pour";
+    return method.key === "ours"
+      ? ["Can pour", "fluid"]
+      : ["Cannot pour", "fluid"];
   }
   if (objectKey === "b2") {
     return method.key === "ours"
-      ? "PG-3DGS produces lift"
-      : "3DGS cannot produce lift";
+      ? ["Produces", "lift"]
+      : ["Cannot produce", "lift"];
   }
-  return method.label;
+  return [method.label];
 }
 
 function comparisonPairFor(entry) {
@@ -268,36 +311,23 @@ function updatePaneLabel(viewer) {
   const labelBody = document.createElement("span");
   labelBody.className = "method-label-body";
 
-  const object = document.createElement("span");
-  object.className = "method-object";
-  object.textContent = datasetObjectLabel(entry);
-
-  const outcome = document.createElement("span");
-  outcome.className = "method-outcome";
-  outcome.textContent = labelOutcome(entry, method);
-
-  labelBody.append(object, outcome);
+  labelOutcomeLines(entry, method).forEach((line) => {
+    const outcome = document.createElement("span");
+    outcome.className = "method-outcome";
+    outcome.textContent = line;
+    labelBody.append(outcome);
+  });
 
   viewer.labelEl.append(badge, labelBody);
 }
 
 function updateDatasetMeta() {
-  if (state.viewMode === "compare") {
-    const entry = viewers[0].dataset;
-    if (!entry) {
-      datasetMeta.textContent = "Comparison unavailable";
-      return;
-    }
-    datasetMeta.textContent = `${datasetObjectLabel(entry)} | 3DGS vs PG-3DGS | ${frameCount()} frames`;
-    return;
-  }
-
   const entry = viewers[0].dataset;
   if (!entry) {
-    datasetMeta.textContent = "No dataset";
+    datasetMeta.textContent = "Comparison unavailable";
     return;
   }
-  datasetMeta.textContent = `${datasetObjectLabel(entry)} | ${datasetMethod(entry).label} | ${entry.summary?.frames ?? 0} frames`;
+  datasetMeta.textContent = `${datasetObjectLabel(entry)} | 3DGS vs PG-3DGS | ${frameCount()} frames`;
 }
 
 function colorRamp(value, range) {
@@ -426,10 +456,18 @@ function updateCameraModeButtons() {
   });
 }
 
-function updateViewModeButtons() {
-  viewModeEl.querySelectorAll("button").forEach((button) => {
-    button.classList.toggle("active", button.dataset.viewMode === state.viewMode);
-  });
+function fieldDescriptionText(mode) {
+  if (mode === "velocity") {
+    return "Currently showing the velocity field: the direction the fluid is flowing.";
+  }
+  if (mode === "rho") {
+    return "Currently showing the rho field: the density of a dye-like tracker used to show fluid pouring out of the teapot.";
+  }
+  return "Currently showing the selected fluid field.";
+}
+
+function updateFieldDescription() {
+  fieldDescription.textContent = fieldDescriptionText(state.fieldMode);
 }
 
 function makeRhoObject(frame, rhoInfo) {
@@ -449,10 +487,10 @@ function makeRhoObject(frame, rhoInfo) {
   geometry.setAttribute("color", new THREE.BufferAttribute(colors, 3));
 
   const material = new THREE.PointsMaterial({
-    size: Number(pointSizeSlider.value),
+    size: RHO_POINT_SIZE,
     vertexColors: true,
     transparent: true,
-    opacity: Number(opacitySlider.value),
+    opacity: FIELD_OPACITY,
     depthWrite: false,
     blending: THREE.AdditiveBlending,
   });
@@ -467,7 +505,7 @@ function makeVelocityObject(frame, velocityInfo) {
   const count = starts.length / 3;
   const positions = new Float32Array(count * 6);
   const colors = new Float32Array(count * 6);
-  const lengthScale = Number(lineSizeSlider.value);
+  const lengthScale = VELOCITY_LINE_SCALE;
 
   for (let i = 0; i < count; i += 1) {
     const sx = starts[i * 3 + 0];
@@ -500,7 +538,7 @@ function makeVelocityObject(frame, velocityInfo) {
   const material = new THREE.LineBasicMaterial({
     vertexColors: true,
     transparent: true,
-    opacity: Number(opacitySlider.value),
+    opacity: FIELD_OPACITY,
     blending: THREE.AdditiveBlending,
     depthWrite: false,
   });
@@ -519,9 +557,14 @@ function renderViewerFrame(viewer) {
     return;
   }
 
-  if (state.fieldMode === "rho" && viewer.field?.rho && pointsToggle.checked) {
+  if (!fieldToggle.checked) {
+    updateMeshFrameVisibility(viewer);
+    return;
+  }
+
+  if (state.fieldMode === "rho" && viewer.field?.rho) {
     viewer.fieldObject = makeRhoObject(frame, viewer.field.rho);
-  } else if (state.fieldMode === "velocity" && viewer.field?.velocity && linesToggle.checked) {
+  } else if (state.fieldMode === "velocity" && viewer.field?.velocity) {
     viewer.fieldObject = makeVelocityObject(frame, viewer.field.velocity);
   }
 
@@ -544,6 +587,7 @@ function setMode(mode, resetFrame = true) {
     button.disabled = !modes.includes(buttonMode);
     button.classList.toggle("active", buttonMode === state.fieldMode);
   });
+  updateFieldDescription();
   if (resetFrame) {
     state.frame = 0;
   }
@@ -581,7 +625,7 @@ function fitViewerCamera(viewer) {
 }
 
 function syncCompareCameras(sourceViewer) {
-  if (syncingCameras || state.viewMode !== "compare") return;
+  if (syncingCameras) return;
   syncingCameras = true;
   viewers.forEach((viewer) => {
     if (viewer === sourceViewer || viewer.pane.hidden) return;
@@ -602,15 +646,20 @@ function fitActiveCameras() {
   syncingCameras = true;
   activeViewers().forEach(fitViewerCamera);
   syncingCameras = false;
-  if (state.viewMode === "compare") {
-    syncCompareCameras(viewers[0]);
-  }
+  syncCompareCameras(viewers[0]);
 }
 
-async function loadViewerDataset(viewer, entry) {
+function disposeGltfs(gltfs) {
+  gltfs.forEach((gltf) => {
+    clearObject(gltf.scene);
+  });
+}
+
+async function loadViewerDataset(viewer, entry, token) {
   clearViewer(viewer);
   viewer.dataset = entry;
   updatePaneLabel(viewer);
+  setViewerLoading(viewer, true);
 
   const meshPaths = entry.meshFrames?.length
     ? entry.meshFrames.map((frame) => frame.path)
@@ -622,6 +671,10 @@ async function loadViewerDataset(viewer, entry) {
       return response.json();
     }),
   ]);
+  if (token !== state.loadToken) {
+    disposeGltfs(gltfs);
+    return false;
+  }
 
   const method = datasetMethod(entry);
   viewer.meshRoots = gltfs.map((gltf) => gltf.scene);
@@ -642,18 +695,20 @@ async function loadViewerDataset(viewer, entry) {
   });
 
   viewer.field = field;
+  return true;
 }
 
-function selectedDataset() {
+function selectedExperimentDataset() {
   const datasets = state.manifest?.datasets || [];
-  return datasets.find((item) => item.id === datasetSelect.value) || datasets[0] || null;
+  return datasets.find((item) => datasetObjectKey(item) === state.experiment) || datasets[0] || null;
 }
 
-function defaultDatasetFor(datasets) {
+function defaultExperimentFor(datasets) {
   const planeDataset = datasets.find(
     (item) => datasetObjectKey(item) === "b2" && comparisonPairFor(item)
   );
-  return planeDataset || datasets[0] || null;
+  const defaultEntry = planeDataset || datasets[0] || null;
+  return defaultEntry ? datasetObjectKey(defaultEntry) : "b2";
 }
 
 function defaultModeForEntry(entry) {
@@ -661,68 +716,62 @@ function defaultModeForEntry(entry) {
 }
 
 function applyViewLayout() {
-  viewerGridEl.classList.toggle("compare", state.viewMode === "compare");
-  viewers[1].pane.hidden = state.viewMode !== "compare";
-  updateViewModeButtons();
+  viewerGridEl.classList.add("compare");
+  viewers[1].pane.hidden = false;
   scheduleViewerResize();
-}
-
-async function loadSingle(entry, token) {
-  applyViewLayout();
-  setStatus("Loading single visualization...");
-  clearViewer(viewers[1]);
-  await loadViewerDataset(viewers[0], entry);
-  if (token !== state.loadToken) return;
-
-  state.cameraMode = "side";
-  updateCameraModeButtons();
-  setMode(defaultModeForEntry(entry), true);
-  fitActiveCameras();
-  setStatus(`${datasetObjectLabel(entry)} ${datasetMethod(entry).label} loaded.`);
 }
 
 async function loadComparison(entry, token) {
   const pair = comparisonPairFor(entry);
   if (!pair) {
-    state.viewMode = "single";
-    updateViewModeButtons();
-    await loadSingle(entry, token);
-    setStatus("No 3DGS/PG-3DGS pair was found for this dataset.");
+    setStatus("No 3DGS/PG-3DGS pair was found for this experiment.");
+    setComparisonError("Unavailable");
     return;
   }
 
   applyViewLayout();
+  setComparisonLoading(true);
   setStatus("Loading 3DGS and PG-3DGS comparison...");
-  await Promise.all([loadViewerDataset(viewers[0], pair[0]), loadViewerDataset(viewers[1], pair[1])]);
-  if (token !== state.loadToken) return;
+  const loaded = await Promise.all([
+    loadViewerDataset(viewers[0], pair[0], token),
+    loadViewerDataset(viewers[1], pair[1], token),
+  ]);
+  if (token !== state.loadToken || loaded.includes(false)) return;
 
   state.cameraMode = "side";
   updateCameraModeButtons();
   setMode(defaultModeForEntry(pair[0]), true);
   fitActiveCameras();
+  setComparisonLoading(false);
   setStatus(`${datasetObjectLabel(pair[0])}: 3DGS baseline left, PG-3DGS ours right.`);
 }
 
-async function loadSelectedDataset() {
-  const entry = selectedDataset();
+async function loadSelectedExperiment() {
+  const entry = selectedExperimentDataset();
   if (!entry) {
     setStatus("No exported checkpoint assets are listed yet.");
-    datasetMeta.textContent = "No datasets";
+    datasetMeta.textContent = "No experiments";
+    setComparisonError("Unavailable");
     return;
   }
 
   const token = ++state.loadToken;
   try {
-    if (state.viewMode === "compare") {
-      await loadComparison(entry, token);
-    } else {
-      await loadSingle(entry, token);
-    }
+    await loadComparison(entry, token);
   } catch (error) {
     if (token === state.loadToken) {
       setStatus(error.message);
+      setComparisonError("Unable to load");
     }
   }
+}
+
+function updateExperimentTabs() {
+  experimentTabs.querySelectorAll("button[data-experiment]").forEach((button) => {
+    const active = button.dataset.experiment === state.experiment;
+    button.classList.toggle("active", active);
+    button.setAttribute("aria-selected", String(active));
+  });
 }
 
 async function loadManifest() {
@@ -732,41 +781,26 @@ async function loadManifest() {
   }
   state.manifest = await response.json();
   const datasets = state.manifest.datasets || [];
-  datasetSelect.innerHTML = "";
 
   if (!datasets.length) {
-    const option = document.createElement("option");
-    option.textContent = "No exported datasets";
-    datasetSelect.append(option);
-    datasetMeta.textContent = "No datasets";
+    datasetMeta.textContent = "No experiments";
     setStatus("No exported checkpoint assets are listed yet.");
+    setComparisonError("Unavailable");
     return;
   }
 
-  for (const dataset of datasets) {
-    const option = document.createElement("option");
-    option.value = dataset.id;
-    option.textContent = optionLabel(dataset);
-    datasetSelect.append(option);
-  }
+  state.experiment = defaultExperimentFor(datasets);
+  updateExperimentTabs();
 
-  const defaultDataset = defaultDatasetFor(datasets);
-  if (defaultDataset) {
-    datasetSelect.value = defaultDataset.id;
-  }
-
-  updateViewModeButtons();
-  await loadSelectedDataset();
+  await loadSelectedExperiment();
 }
 
-datasetSelect.addEventListener("change", loadSelectedDataset);
-
-viewModeEl.addEventListener("click", (event) => {
-  const button = event.target.closest("button[data-view-mode]");
-  if (!button || button.dataset.viewMode === state.viewMode) return;
-  state.viewMode = button.dataset.viewMode;
-  updateViewModeButtons();
-  loadSelectedDataset();
+experimentTabs.addEventListener("click", (event) => {
+  const button = event.target.closest("button[data-experiment]");
+  if (!button || button.dataset.experiment === state.experiment) return;
+  state.experiment = button.dataset.experiment;
+  updateExperimentTabs();
+  loadSelectedExperiment();
 });
 
 fieldModeEl.addEventListener("click", (event) => {
@@ -798,11 +832,8 @@ meshToggle.addEventListener("change", () => {
   activeViewers().forEach(updateMeshFrameVisibility);
 });
 
-opacitySlider.addEventListener("input", renderAllFieldFrames);
-pointSizeSlider.addEventListener("input", renderAllFieldFrames);
-lineSizeSlider.addEventListener("input", renderAllFieldFrames);
-pointsToggle.addEventListener("change", renderAllFieldFrames);
-linesToggle.addEventListener("change", renderAllFieldFrames);
+fieldToggle.addEventListener("change", renderAllFieldFrames);
+
 panelToggle.addEventListener("click", () => {
   setPanelCollapsed(!panelEl.classList.contains("collapsed"), true);
 });
@@ -837,5 +868,6 @@ setPanelCollapsed(mobilePanelQuery.matches);
 loadManifest().catch((error) => {
   datasetMeta.textContent = "Assets unavailable";
   setStatus(error.message);
+  setComparisonError("Unable to load");
 });
 requestAnimationFrame(tick);

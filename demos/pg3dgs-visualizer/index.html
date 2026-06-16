@@ -22,20 +22,36 @@
         type="button"
         aria-controls="panelBody"
         aria-expanded="true"
-        aria-label="Collapse controls"
+        aria-label="Collapse help"
       >
-        <span class="menu-line"></span>
-        <span class="menu-line"></span>
-        <span class="menu-line"></span>
+        <span class="help-icon" aria-hidden="true">?</span>
+        <span class="help-text">Help</span>
       </button>
-      <div class="viewer-grid" id="viewerGrid">
+      <div class="viewer-grid compare" id="viewerGrid">
+        <div class="viewer-topbar" aria-label="Experiment selection">
+          <div class="experiment-tabs" id="experimentTabs" role="tablist" aria-label="Experiment">
+            <button type="button" role="tab" data-experiment="b2" aria-selected="true">
+              Plane
+            </button>
+            <button type="button" role="tab" data-experiment="teapot14" aria-selected="false">
+              Teapot
+            </button>
+          </div>
+        </div>
+
         <section class="viewer-pane" id="panePrimary" aria-label="Primary visualization">
           <canvas id="scene"></canvas>
           <div class="method-label" id="primaryPaneLabel"></div>
+          <div class="loading-overlay" id="primaryLoading" role="status" aria-live="polite">
+            <div class="loading-popup">Loading</div>
+          </div>
         </section>
-        <section class="viewer-pane compare-pane" id="paneCompare" aria-label="Comparison visualization" hidden>
+        <section class="viewer-pane compare-pane" id="paneCompare" aria-label="Comparison visualization">
           <canvas id="sceneCompare"></canvas>
           <div class="method-label" id="comparePaneLabel"></div>
+          <div class="loading-overlay" id="compareLoading" role="status" aria-live="polite">
+            <div class="loading-popup">Loading</div>
+          </div>
         </section>
       </div>
 
@@ -51,21 +67,13 @@
           <a class="home-link" href="../../">Back to Homepage</a>
 
           <p class="menu-intro">
-            Selected fluid simulation results on a teapot and plane, optimizing for pouring a tracker fluid and producing lift, respectively. Select from the dropdown and options to compare a baseline method (3D Gaussian Splatting) with our method (Physics Guided 3D Gaussian Splatting).
+            This demo visualizes fluid simulation results for two physics-guided reconstruction tasks:
+            teapot pouring and plane lift generation. Use the tabs above to switch between experiments.
+            Each view compares a baseline 3D Gaussian Splatting reconstruction with our
+            Physics-Guided 3D Gaussian Splatting method, showing how physics supervision produces
+            more functional geometry. For more details, see our
+            <a href="https://arxiv.org/abs/2605.11266" target="_blank" rel="noopener noreferrer">paper</a>.
           </p>
-
-          <label class="control">
-            <span>Experiment</span>
-            <select id="datasetSelect"></select>
-          </label>
-
-          <div class="control">
-            <span>View</span>
-            <div class="segmented" id="viewMode">
-              <button type="button" data-view-mode="single">Single</button>
-              <button type="button" data-view-mode="compare">Compare</button>
-            </div>
-          </div>
 
           <div class="control">
             <span>Field</span>
@@ -73,7 +81,15 @@
               <button type="button" data-mode="rho">Rho</button>
               <button type="button" data-mode="velocity">Velocity</button>
             </div>
+            <p class="field-description" id="fieldDescription">
+              Currently showing the selected fluid field.
+            </p>
           </div>
+
+          <label class="check-row">
+            <input id="fieldToggle" type="checkbox" checked />
+            <span>Show Field</span>
+          </label>
 
           <div class="control">
             <span>Camera</span>
@@ -87,32 +103,6 @@
           <label class="check-row">
             <input id="meshToggle" type="checkbox" checked />
             <span>Mesh</span>
-          </label>
-
-          <div class="check-grid" aria-label="Field visibility">
-            <label class="check-row">
-              <input id="pointsToggle" type="checkbox" checked />
-              <span>Points</span>
-            </label>
-            <label class="check-row">
-              <input id="linesToggle" type="checkbox" checked />
-              <span>Lines</span>
-            </label>
-          </div>
-
-          <label class="control">
-            <span>Field Opacity</span>
-            <input id="opacitySlider" type="range" min="0.05" max="1" step="0.05" value="0.75" />
-          </label>
-
-          <label class="control">
-            <span>Point Size</span>
-            <input id="pointSizeSlider" type="range" min="0.004" max="0.08" step="0.002" value="0.08" />
-          </label>
-
-          <label class="control">
-            <span>Line Size</span>
-            <input id="lineSizeSlider" type="range" min="0.15" max="1.8" step="0.05" value="0.15" />
           </label>
 
           <p class="status" id="status">Loading manifest...</p>
